@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import socketIOClient from 'socket.io-client'
+import Button from '@material-ui/core/Button'
 
 class App extends Component {
+  socket = socketIOClient.connect();
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <Button
+            variant="contained"
+            color="primary"
+            >Make Room</Button><br></br>
+            <Button
+              variant="contained"
+              color="primary"
+              >Join</Button>
         </header>
       </div>
     );
   }
+
+  componentDidMount = () => {
+      const socket = socketIOClient.connect('https://localhost');
+      socket.on('init', (data) => {
+        console.log(data);
+      })
+  }
+
+
 }
 
 export default App;
