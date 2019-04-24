@@ -2,8 +2,8 @@ var express = require('express');
 var fs = require('fs');
 var app = express();
 var options = {
-      key: fs.readFileSync('server/key/key.key.pem'),
-      cert : fs.readFileSync('server/key/cert.crt.pem')
+      key: fs.readFileSync('server/key/key.pem'),
+      cert : fs.readFileSync('server/key/server.crt')
     };
 var server = require('https').createServer(options, app);
 var io = require('socket.io')(server);
@@ -18,8 +18,8 @@ function start() {
 
 function runSocket() {
   io.on('connection', function (socket) {
-    console.log('connected');
-    connectCtrl(socket);
+    console.log('socket connected');
+    connectCtrl(io, socket);
 
     socket.on('disconnect', () => {
       console.log("socket disconnected");

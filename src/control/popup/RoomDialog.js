@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 
 class RoomDialog extends Component {
   render() {
@@ -15,7 +17,11 @@ class RoomDialog extends Component {
           id="simple-dialog-title">
           Make Room
         </DialogTitle>
-        <div>test</div>
+        <DialogContent>
+          <DialogContentText>
+            est
+          </DialogContentText>
+        </DialogContent>
       </Dialog>
     );
   }

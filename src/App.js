@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-// import socketIOClient from 'socket.io-client'
+import socketIOClient from 'socket.io-client'
 import Button from '@material-ui/core/Button'
 import RoomDialog from './control/popup/RoomDialog'
 import JoinDialog from './control/popup/JoinDialog'
@@ -60,12 +60,19 @@ class App extends Component {
     });
   }
 
-  // componentDidMount = () => {
-  //     const socket = socketIOClient.connect('https://localhost');
-  //     socket.on('init', (data) => {
-  //       console.log(data);
-  //     })
-  // }
+  componentDidMount = () => {
+     const socket = socketIOClient.connect('https://localhost:443');
+
+     socket.emit('joinRoom', 'root', prompt());
+
+     socket.on('init', (data) => {
+       console.log(data);
+     });
+
+     socket.on('successJoinRoom', (id, roomNo) => {
+       console.log(id, roomNo);
+     })
+  }
 }
 
 export default App;
