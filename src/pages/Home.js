@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
-import socketIOClient from 'socket.io-client'
+import './Home.css';
 import Button from '@material-ui/core/Button'
-import RoomDialog from './control/popup/RoomDialog'
-import JoinDialog from './control/popup/JoinDialog'
+import RoomDialog from './popup/RoomDialog'
+import JoinDialog from './popup/JoinDialog'
 
 class App extends Component {
   state = {
@@ -28,7 +27,8 @@ class App extends Component {
         </header>
         <RoomDialog
           open={this.state.roomDialogOpen}
-          onClose={this.handleRoomClose}/>
+          onClose={this.handleRoomClose}
+          make={this.createRoom}/>
         <JoinDialog
           open={this.state.joinDialogOpen}
           onClose={this.handleJoinClose}/>
@@ -60,18 +60,8 @@ class App extends Component {
     });
   }
 
-  componentDidMount = () => {
-     const socket = socketIOClient.connect('https://localhost:443');
-
-     socket.emit('joinRoom', 'root', prompt());
-
-     socket.on('init', (data) => {
-       console.log(data);
-     });
-
-     socket.on('successJoinRoom', (id, roomNo) => {
-       console.log(id, roomNo);
-     })
+  createRoom = (roomNo) => {
+    console.log(roomNo);
   }
 }
 
