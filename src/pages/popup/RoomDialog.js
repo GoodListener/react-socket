@@ -13,13 +13,13 @@ class RoomDialog extends Component {
   }
 
   render() {
-    const {onClose, ...other} = this.props;
+    const {onClose} = this.props;
 
     return (
       <Dialog
         aria-labelledby="simple-dialog-title"
-        onClose={this.handleClose}
-        {...other}>
+        onClose={onClose}
+        open={this.props.open}>
         <DialogTitle
           id="simple-dialog-title">
           Make Room
@@ -40,10 +40,6 @@ class RoomDialog extends Component {
         </DialogContent>
       </Dialog>
     );
-  }
-
-  handleClose = () => {
-    this.props.onClose();
   }
 
   handleChange = (e) => {

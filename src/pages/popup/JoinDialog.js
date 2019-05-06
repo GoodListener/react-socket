@@ -9,7 +9,7 @@ class JoinDialog extends Component {
     return (
       <Dialog
         aria-labelledby="simple-dialog-title"
-        onClose={this.handleClose}
+        onClose={onClose}
         {...other}>
         <DialogTitle
           id="simple-dialog-title">
@@ -18,10 +18,6 @@ class JoinDialog extends Component {
         <div>Join</div>
       </Dialog>
     );
-  }
-
-  handleClose = () => {
-    this.props.onClose();
   }
 }
 

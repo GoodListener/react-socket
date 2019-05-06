@@ -7,7 +7,8 @@ import JoinDialog from './popup/JoinDialog'
 class App extends Component {
   state = {
     roomDialogOpen: false,
-    joinDialogOpen: false
+    joinDialogOpen: false,
+    path: ''
   }
 
   render() {
@@ -61,7 +62,8 @@ class App extends Component {
   }
 
   createRoom = (roomNo) => {
-    console.log(roomNo);
+    let path = `/room/${roomNo}`;
+    this.props.history.push(path);
   }
 }
 
