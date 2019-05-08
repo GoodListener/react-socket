@@ -11,7 +11,7 @@ class App extends Component {
                 <Route path="/room/:roomNo" component={Room}/>
                 <Route path="/room" component={Room}/>
               </Switch>
-              <Route path="/join" component={Join}/>
+              <Route path="/join/:roomNo/:nickName" component={Join}/>
             </div>
         );
     }

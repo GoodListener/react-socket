@@ -29,10 +29,13 @@ class App extends Component {
         <RoomDialog
           open={this.state.roomDialogOpen}
           onClose={this.handleRoomClose}
-          make={this.createRoom}/>
+          make={this.createRoom}
+          />
         <JoinDialog
           open={this.state.joinDialogOpen}
-          onClose={this.handleJoinClose}/>
+          onClose={this.handleJoinClose}
+          join={this.joinRoom}
+          />
       </div>
     );
   }
@@ -63,6 +66,11 @@ class App extends Component {
 
   createRoom = (roomNo) => {
     let path = `/room/${roomNo}`;
+    this.props.history.push(path);
+  }
+
+  joinRoom = (roomNo, nickName) => {
+    let path = `/join/${roomNo}/${nickName}`;
     this.props.history.push(path);
   }
 }
