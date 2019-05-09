@@ -29,8 +29,9 @@ class QuizForm extends Component {
   state = {
     quiz : '',
     option : [],
-
   }
+
+  no = 1;
 
   render() {
     return (
@@ -38,28 +39,38 @@ class QuizForm extends Component {
       <TextField
         id="standard"
         label="문제"
+        onChange={this.handleQuizInputChange}
         >
       </TextField>
+      {this.state.option}
       <Button
-        onClick={this.handleQuestionAddClick}>
+        onClick={this.handleAddQuestionButtonClick}>
         보기 추가
       </Button>
       <Button
       variant="contained"
       color="primary"
-      onClick={this.handleMakeClick}>Make</Button>
+      onClick={this.handleMakeButtonClick}>Make</Button>
       </React.Fragment>
     )
   }
+  handleQuizInputChange = (e) => {
+    this.setState({
+      quiz : e.target.value
+    })
+  }
 
-  handleMakeClick = () => {
+  handleMakeButtonClick = () => {
     this.props.createQuiz(this.state);
   }
 
-  handleQuestionAddClick = () => {
-    const quizOption = this.state.option.concat({
-      question : ''
-    });
+  handleAddQuestionButtonClick = () => {
+    const quizOption = this.state.option.concat(
+      <QuizQuestion
+        key={this.no}
+      />
+      );
+    this.no++;
 
     this.setState({
       option : quizOption
