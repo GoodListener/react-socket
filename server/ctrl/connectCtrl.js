@@ -11,6 +11,10 @@ function connectCtrl(io, socket) {
       io.to(roomNo).emit('successMakeRoom', roomNo, 'host');
     })
   })
+
+  socket.on('sendQuiz', (quiz) => {
+    console.log(quiz);
+  })
 }
 
 module.exports = connectCtrl;

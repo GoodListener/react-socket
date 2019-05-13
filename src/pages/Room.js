@@ -3,14 +3,24 @@ import './Room.css';
 import MakeQuizDialog from './popup/MakeQuizDialog'
 import io from 'socket.io-client';
 import Button from '@material-ui/core/Button'
+import QuizCard from './comp/QuizCard'
+
+const socket = io('https://localhost');
 
 class Room extends Component {
   state = {
-    quizDialogOpen : false
+    quizDialogOpen : false,
+    quizList : []
   }
 
   render() {
     const {roomNo} = this.props.match.params;
+    const quizList = this.state.quizList.map((quiz) => {return (
+      <QuizCard
+        quiz={quiz}
+        sendQuiz={this.handleSendQuiz}
+        />
+    )});
 
     return (
       <div className="App">
@@ -22,10 +32,11 @@ class Room extends Component {
             onClick={this.popMakeQuizPopup}>
             makeQuiz
           </Button>
-
+          {quizList}
           <MakeQuizDialog
             open={this.state.quizDialogOpen}
             onClose={this.handleClose}
+            make={this.addQuiz}
             />
         </header>
       </div>
@@ -44,8 +55,19 @@ class Room extends Component {
     });
   }
 
+  addQuiz = (quiz) => {
+    const quizList = this.state.quizList.concat(quiz);
+    this.setState({
+      quizList : quizList
+    })
+  }
+
+  handleSendQuiz = (quiz) => {
+    console.log(quiz);
+    socket.emit('sendQuiz', quiz);
+  }
+
   componentDidMount() {
-    const socket = io('https://localhost');
     socket.emit('makeRoom', this.props.match.params.roomNo);
 
     socket.on('successMakeRoom', (id, roomNo) => {

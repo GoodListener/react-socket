@@ -5,26 +5,24 @@ import QuizForm from './QuizForm'
 
 class MakeQuizDialog extends Component {
   render() {
-    const {onClose} = this.props;
-
     return (
       <Dialog
         aria-labelledby="quiz-dialog-title"
-        onClose={onClose}
         open={this.props.open}>
         <DialogTitle
           id="quiz-dialog-title">
           Make Quiz
         </DialogTitle>
         <QuizForm
-          createQuiz={this.handleQuizCreate}>
-        </QuizForm>
+          createQuiz={this.handleSubmit}
+          />
       </Dialog>
     );
   }
 
-  handleQuizCreate = (data) => {
-    console.log(data);
+  handleSubmit = (data) => {
+    this.props.onClose();
+    this.props.make(data);
   }
 }
 

@@ -1,80 +1,85 @@
 import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField'
+import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
 
 class QuizQuestion extends Component {
-  state = {
-    question : ''
+  handleChange = (e) => {
+    this.props.onChange(e, this.props.no);
   }
-
   render() {
+
     return (
       <TextField
+        onChange={this.handleChange}
         id="standard"
         label="보기"
-        onChange={this.handleChange}
-        >
-      </TextField>
+      />
     )
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      question : e.target.value
-    });
   }
 }
 
 class QuizForm extends Component {
   state = {
-    quiz : '',
+    title : '',
     option : [],
+    quizOption : [],
   }
 
-  no = 1;
+  no = 0;
 
   render() {
     return (
-      <React.Fragment>
-      <TextField
-        id="standard"
-        label="문제"
-        onChange={this.handleQuizInputChange}
-        >
-      </TextField>
-      {this.state.option}
-      <Button
-        onClick={this.handleAddQuestionButtonClick}>
-        보기 추가
-      </Button>
-      <Button
-      variant="contained"
-      color="primary"
-      onClick={this.handleMakeButtonClick}>Make</Button>
-      </React.Fragment>
+      <form onSubmit={this.handleSubmit}>
+        <TextField
+          id="standard"
+          label="문제"
+          onChange={this.handleQuizInputChange}
+          >
+        </TextField>
+        {this.state.option}
+        <Button
+          onClick={this.handleAddOptionButtonClick}>
+          보기 추가
+        </Button>
+        <DialogActions>
+        <Button
+          color="primary"
+          onClick={this.handleSubmit}
+          >Make</Button>
+        </DialogActions>
+      </form>
     )
   }
   handleQuizInputChange = (e) => {
     this.setState({
-      quiz : e.target.value
+      title : e.target.value
     })
   }
 
-  handleMakeButtonClick = () => {
-    this.props.createQuiz(this.state);
-  }
-
-  handleAddQuestionButtonClick = () => {
+  handleAddOptionButtonClick = () => {
     const quizOption = this.state.option.concat(
       <QuizQuestion
         key={this.no}
-      />
+        no={this.no}
+        onChange={this.handleEachChange}
+        />
       );
     this.no++;
 
     this.setState({
       option : quizOption
     })
+  }
+
+  handleEachChange = (e, index) => {
+    const quizOption = this.state.quizOption;
+    quizOption[index] = e.target.value;
+  }
+
+  handleSubmit = (e) => {
+    this.props.createQuiz(this.state);
+    e.preventDefault();
   }
 }
 
