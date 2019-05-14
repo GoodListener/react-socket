@@ -24,6 +24,10 @@ class Join extends Component {
 
     socket.on('successJoinRoom', (roomNo, nickName) => {
       console.log(roomNo, nickName);
+    });
+
+    socket.on('receiveQuiz', (quiz) => {
+      console.log(quiz);
     })
   }
 }

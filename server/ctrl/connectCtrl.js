@@ -12,8 +12,12 @@ function connectCtrl(io, socket) {
     })
   })
 
-  socket.on('sendQuiz', (quiz) => {
-    console.log(quiz);
+  socket.on('sendQuiz', (roomNo, quiz) => {
+    const quizObj = {
+      title : quiz.title,
+      option: quiz.quizOption
+    }
+    io.to(roomNo).emit('receiveQuiz', quizObj);
   })
 }
 

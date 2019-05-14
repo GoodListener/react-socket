@@ -64,7 +64,7 @@ class Room extends Component {
 
   handleSendQuiz = (quiz) => {
     console.log(quiz);
-    socket.emit('sendQuiz', quiz);
+    socket.emit('sendQuiz', this.props.match.params.roomNo, quiz);
   }
 
   componentDidMount() {
