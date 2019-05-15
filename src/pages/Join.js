@@ -45,6 +45,7 @@ class Join extends Component {
     });
 
     socket.on('receiveQuiz', (quiz) => {
+      console.log(quiz);
       // 문제 출제
       this.setState({
         quiz : quiz,
@@ -56,7 +57,7 @@ class Join extends Component {
         this.setState({
           quizDialogOpen : false
         })
-      }, 3000);
+      }, quiz.time);
     })
   }
 }

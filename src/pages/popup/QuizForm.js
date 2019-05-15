@@ -24,6 +24,7 @@ class QuizForm extends Component {
     quiz : {
       title : '',
       quizOption : [''],
+      time : 3000
     },
     option : [],
   }
@@ -54,15 +55,15 @@ class QuizForm extends Component {
     )
   }
   handleQuizInputChange = (e) => {
+    const {quiz} = this.state;
+    quiz.title = e.target.value;
     this.setState({
-      quiz : {
-        title : e.target.value
-      }
+      quiz
     })
   }
 
   handleAddOptionButtonClick = () => {
-    const quizOption = this.state.option.concat(
+    const option = this.state.option.concat(
       <QuizQuestion
         key={this.no}
         no={this.no}
@@ -72,13 +73,17 @@ class QuizForm extends Component {
     this.no++;
 
     this.setState({
-      option : quizOption
+      option : option
     })
   }
 
   handleEachChange = (e, index) => {
-    const quizOption = this.state.quiz.quizOption;
+    const { quiz } = this.state;
+    const quizOption = quiz.quizOption;
     quizOption[index] = e.target.value;
+    this.setState({
+      quiz : quiz
+    })
   }
 
   handleSubmit = (e) => {

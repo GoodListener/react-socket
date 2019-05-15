@@ -17,7 +17,8 @@ class Room extends Component {
           '보기1번',
           '보기2번',
           '보기3번'
-        ]
+        ],
+        time : 3000
       },
       {
         title : '2번샘플퀴즈',
@@ -25,7 +26,8 @@ class Room extends Component {
           '보기1번',
           '보기2번',
           '보기3번'
-        ]
+        ],
+        time : 5000
       }
     ]
   }
