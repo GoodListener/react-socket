@@ -21,9 +21,11 @@ class QuizQuestion extends Component {
 
 class QuizForm extends Component {
   state = {
-    title : '',
+    quiz : {
+      title : '',
+      quizOption : [''],
+    },
     option : [],
-    quizOption : [],
   }
 
   no = 0;
@@ -53,7 +55,9 @@ class QuizForm extends Component {
   }
   handleQuizInputChange = (e) => {
     this.setState({
-      title : e.target.value
+      quiz : {
+        title : e.target.value
+      }
     })
   }
 
@@ -73,12 +77,12 @@ class QuizForm extends Component {
   }
 
   handleEachChange = (e, index) => {
-    const quizOption = this.state.quizOption;
+    const quizOption = this.state.quiz.quizOption;
     quizOption[index] = e.target.value;
   }
 
   handleSubmit = (e) => {
-    this.props.createQuiz(this.state);
+    this.props.createQuiz(this.state.quiz);
     e.preventDefault();
   }
 }

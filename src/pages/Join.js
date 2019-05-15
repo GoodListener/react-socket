@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import './Join.css';
 import io from 'socket.io-client';
+import QuizDialog from './popup/QuizDialog'
 
 class Join extends Component {
+  state = {
+    quizDialogOpen : false,
+    quiz : {}
+  }
+
   render() {
     const {roomNo, nickName} = this.props.match.params;
 
@@ -11,9 +17,21 @@ class Join extends Component {
         <header className="App-header">
           join {roomNo}
           {nickName}
+
+          <QuizDialog
+            quiz={this.state.quiz}
+            open={this.state.quizDialogOpen}
+            onClose={this.handleClose}
+            />
         </header>
       </div>
     );
+  }
+
+  handleClose = () => {
+    this.setState({
+      quizDialogOpen : false
+    })
   }
 
   componentDidMount() {
@@ -27,7 +45,18 @@ class Join extends Component {
     });
 
     socket.on('receiveQuiz', (quiz) => {
-      console.log(quiz);
+      // 문제 출제
+      this.setState({
+        quiz : quiz,
+        quizDialogOpen : true
+      });
+
+      // 출제된 문제가 3초동안만 떠있음
+      setTimeout(() => {
+        this.setState({
+          quizDialogOpen : false
+        })
+      }, 3000);
     })
   }
 }

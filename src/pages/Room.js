@@ -10,17 +10,37 @@ const socket = io('https://localhost');
 class Room extends Component {
   state = {
     quizDialogOpen : false,
-    quizList : []
+    quizList : [
+      {
+        title : '1번샘플퀴즈',
+        quizOption : [
+          '보기1번',
+          '보기2번',
+          '보기3번'
+        ]
+      },
+      {
+        title : '2번샘플퀴즈',
+        quizOption : [
+          '보기1번',
+          '보기2번',
+          '보기3번'
+        ]
+      }
+    ]
   }
 
   render() {
     const {roomNo} = this.props.match.params;
-    const quizList = this.state.quizList.map((quiz) => {return (
-      <QuizCard
-        quiz={quiz}
-        sendQuiz={this.handleSendQuiz}
-        />
-    )});
+    const quizList = this.state.quizList.map((quiz, index) => {
+      return (
+        <QuizCard
+          key={index}
+          quiz={quiz}
+          sendQuiz={this.handleSendQuiz}
+          />
+      )
+    });
 
     return (
       <div className="App">
