@@ -45,14 +45,13 @@ class Join extends Component {
     });
 
     socket.on('receiveQuiz', (quiz) => {
-      console.log(quiz);
       // 문제 출제
       this.setState({
         quiz : quiz,
         quizDialogOpen : true
       });
 
-      // 출제된 문제가 3초동안만 떠있음
+      // 출제된 문제가 제한시간동안만 떠있음
       setTimeout(() => {
         this.setState({
           quizDialogOpen : false

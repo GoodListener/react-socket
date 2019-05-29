@@ -6,7 +6,12 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import Button from '@material-ui/core/Button'
 import Fab from '@material-ui/core/Fab'
 
+
 class QuizDialog extends Component {
+  state = {
+    answer : undefined,
+  }
+
   render() {
     const {quiz} = this.props;
 
@@ -23,20 +28,29 @@ class QuizDialog extends Component {
             { ( () => {
                 if (quiz.type === 'multiple-choice') {
                   return quiz.quizOption.map(
-                        option => (<Fab onClick={this.handleClickOption}>{option}</Fab>)
+                        (option, index) =>
+                          (<Fab
+                            onClick={this.handleClickOption}
+                            value={index}>
+                            {option}
+                          </Fab>)
                         )
                 } else if (quiz.type === 'open-ended') {
                   return (<React.Fragment>
                           <input onChange={this.handleChangeInput}/>
                           <Button
                             variant="contained"
-                            color="primary">
+                            color="primary"
+                            onClick={this.handleSubmitButtonClick}>
                             제출
                           </Button></React.Fragment>
                         )
 
                 } else if (quiz.type === 'ox-quiz') {
-                  return (<React.Fragment><Fab>O</Fab><Fab>X</Fab></React.Fragment>)
+                  return (<React.Fragment>
+                          <Fab value="true">O</Fab>
+                          <Fab value="false">X</Fab>
+                        </React.Fragment>)
                 }
               })()
             }
@@ -47,11 +61,25 @@ class QuizDialog extends Component {
   }
 
   handleClickOption = (e) => {
-    console.log(e.target);
+    console.log(this.state.answer);
+    if (this.state.answer) {
+      return;
+    }
+
+    this.setState({
+      answer : e.currentTarget.value,
+    });
+    e.currentTarget.style.backgroundColor = 'gold'
   }
 
   handleChangeInput = (e) => {
-    console.log(e.target.value);
+    this.setState({
+      answer : e.target.value
+    });
+  }
+
+  handleSubmitButtonClick = (e) => {
+    console.log(this.state.answer);
   }
 }
 
