@@ -6,7 +6,8 @@ import QuizDialog from './popup/QuizDialog'
 class Join extends Component {
   state = {
     quizDialogOpen : false,
-    quiz : {}
+    quiz : {},
+    answer : undefined
   }
 
   render() {
@@ -18,14 +19,30 @@ class Join extends Component {
           join {roomNo}
           {nickName}
 
-          <QuizDialog
-            quiz={this.state.quiz}
-            open={this.state.quizDialogOpen}
-            onClose={this.handleClose}
-            />
+          {
+            (() => {
+              if (this.state.quizDialogOpen) {
+                return (<QuizDialog
+                  quiz={this.state.quiz}
+                  open={this.state.quizDialogOpen}
+                  writeAnswer={this.writeAnswer}
+                  onClose={this.handleClose}
+                  />)
+              } else {
+                return ''
+              }
+            })()
+          }
         </header>
       </div>
     );
+  }
+
+  writeAnswer = (answer) => {
+    this.setState({
+      answer : answer
+    })
+    console.log(answer);
   }
 
   handleClose = () => {

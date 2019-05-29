@@ -9,7 +9,7 @@ import Fab from '@material-ui/core/Fab'
 
 class QuizDialog extends Component {
   state = {
-    answer : undefined,
+    isWriteAnswer : false
   }
 
   render() {
@@ -61,14 +61,15 @@ class QuizDialog extends Component {
   }
 
   handleClickOption = (e) => {
-    console.log(this.state.answer);
-    if (this.state.answer) {
+    if (this.state.isWriteAnswer) {
       return;
     }
 
     this.setState({
-      answer : e.currentTarget.value,
-    });
+      isWriteAnswer : true
+    })
+
+    this.props.writeAnswer(e.currentTarget.value);
     e.currentTarget.style.backgroundColor = 'gold'
   }
 

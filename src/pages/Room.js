@@ -21,7 +21,7 @@ class Room extends Component {
           '보기4번(정답)'
         ],
         answer : 3,
-        time : 15000
+        time : 5000
       },
       {
         title : '샘플퀴즈',
