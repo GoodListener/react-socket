@@ -30,6 +30,7 @@ class QuizDialog extends Component {
                   return quiz.quizOption.map(
                         (option, index) =>
                           (<Fab
+                            key={index}
                             onClick={this.handleClickOption}
                             value={index}>
                             {option}

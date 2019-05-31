@@ -21,23 +21,14 @@ class Room extends Component {
           '보기4번(정답)'
         ],
         answer : 3,
-        time : 5000
-      },
-      {
-        title : '샘플퀴즈',
-        type : 'multiple-choice',
-        quizOption : [
-          '보기1번',
-          '보기2번',
-          '보기3번(정답)'
-        ],
-        answer : 2,
+        isPresented : false,
         time : 5000
       },
       {
         title : '[주관식] 나는 ㅁㅁ다.',
         type : 'open-ended',
         answer : '바보',
+        isPresented : false,
         time : 15000
       },
       {
@@ -45,6 +36,7 @@ class Room extends Component {
         type : 'ox-quiz',
         quizOption : ['O', 'X'],
         answer : 'o',
+        isPresented : false,
         time : 3000
       }
     ]
@@ -103,8 +95,9 @@ class Room extends Component {
   }
 
   handleSendQuiz = (quiz) => {
-    console.log(quiz);
-    socket.emit('sendQuiz', this.props.match.params.roomNo, quiz);
+    socket.emit('sendQuiz', this.props.match.params.roomNo, quiz, (data) => {
+      console.log(data);
+    });
   }
 
   componentDidMount() {

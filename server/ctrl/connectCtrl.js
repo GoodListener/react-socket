@@ -12,8 +12,9 @@ function connectCtrl(io, socket) {
     })
   })
 
-  socket.on('sendQuiz', (roomNo, quiz) => {
+  socket.on('sendQuiz', (roomNo, quiz, callback) => {
     io.to(roomNo).emit('receiveQuiz', quiz);
+    callback(quiz);
   })
 }
 

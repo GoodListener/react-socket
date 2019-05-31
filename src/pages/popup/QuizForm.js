@@ -2,19 +2,38 @@ import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
+import Radio from '@material-ui/core/Radio';
 
 class QuizQuestion extends Component {
+  state = {
+    answer : undefined
+  }
+
   handleChange = (e) => {
     this.props.onChange(e, this.props.no);
   }
-  render() {
 
+  handleRadioChange = (e) => {
+    this.setState({
+      checkNo : e.target.value
+    });
+  }
+
+  render() {
     return (
-      <TextField
-        onChange={this.handleChange}
-        id="standard"
-        label="보기"
-      />
+      <React.Fragment>
+        <Radio
+          checked={this.props.no === this.state.checkNo}
+          onChange={this.handleRadioChange}
+          name="option-radio"
+          value={this.props.no}
+          />
+        <TextField
+          onChange={this.handleChange}
+          id="standard"
+          label="보기"
+        />
+      </React.Fragment>
     )
   }
 }
@@ -23,8 +42,11 @@ class QuizForm extends Component {
   state = {
     quiz : {
       title : '',
+      type : 'multiple-choice',
       quizOption : [''],
-      time : 3000
+      answer : undefined,
+      time : 3000,
+      isPresented : false,
     },
     option : [],
   }
@@ -57,9 +79,7 @@ class QuizForm extends Component {
   handleQuizInputChange = (e) => {
     const {quiz} = this.state;
     quiz.title = e.target.value;
-    this.setState({
-      quiz
-    })
+    this.setState({ quiz })
   }
 
   handleAddOptionButtonClick = () => {
